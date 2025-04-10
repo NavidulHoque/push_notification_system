@@ -24,4 +24,11 @@ export class PushNotificationsService {
         await this.pushQueue.add('scheduled-push', dto, { delay });
         return { message: 'Notification scheduled successfully.' };
     }
+
+    cronSend() {
+        const users = this.userService.getAllUsers();
+        users.forEach((user) => {
+            console.log(`⏰ [CRON] Sent to ${user.name} [${user.deviceToken}]: Daily Cron Notification`);
+        });
+    }
 }
