@@ -4,14 +4,16 @@ import { PushNotificationsModule } from './push-notifications/push-notifications
 import { ScheduleModule } from '@nestjs/schedule';
 import { BullModule } from '@nestjs/bull';
 import { SchedulerModule } from './scheduler/scheduler.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
     ScheduleModule.forRoot(),
     BullModule.forRoot({
       redis: {
-        host: 'localhost',
-        port: 6379,
+        host: process.env.REDIS_HOST,
+        port: Number(process.env.REDIS_PORT),
       },
     }),
     UserModule,

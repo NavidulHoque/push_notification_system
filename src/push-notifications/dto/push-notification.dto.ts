@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsOptional, IsString, IsISO8601 } from 'class-validator';
 
-export class SendPushDto {
+export class PushNotificationDto {
   @IsString()
   @IsNotEmpty()
   title: string;

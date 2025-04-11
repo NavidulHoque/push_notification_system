@@ -1,5 +1,5 @@
-import { Injectable } from '@nestjs/common';
-import { SendPushDto } from './dto/send-push.dto';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { PushNotificationDto } from './dto';
 import { InjectQueue } from '@nestjs/bull';
 import { UserService } from 'src/user/user.service';
 import { Queue } from 'bull';
@@ -11,18 +11,30 @@ export class PushNotificationsService {
         @InjectQueue('pushQueue') private readonly pushQueue: Queue,
     ) { }
 
-    sendNow(dto: SendPushDto) {
+    sendNow(dto: PushNotificationDto) {
         const users = this.userService.getAllUsers();
         users.forEach((user) => {
-            console.log(`✅ Sent to ${user.name} [${user.deviceToken}]: ${dto.title} - ${dto.message}`);
+            console.log(`✅ Sent to ${user.name} [${user.deviceToken}]: ${dto.title} - ${dto.message}`)
         });
         return { message: 'Notifications sent immediately.' };
     }
 
-    async schedule(dto: SendPushDto) {
-        const delay = new Date(dto?.scheduleAt as string).getTime() - Date.now();
-        await this.pushQueue.add('scheduled-push', dto, { delay });
-        return { message: 'Notification scheduled successfully.' };
+    async schedule(dto: PushNotificationDto) {
+
+        try {
+            const delay = new Date(dto?.scheduleAt as string).getTime() - new Date().getTime();
+
+            if (isNaN(delay) || delay < 0) {
+                throw new BadRequestException('Invalid schedule time');
+            }
+
+            await this.pushQueue.add('scheduled-push', dto, { delay });
+            return { message: 'Notification scheduled successfully.' };
+        }
+
+        catch (error) {
+            throw error;
+        }
     }
 
     cronSend() {
