@@ -32,7 +32,7 @@ export class SchedulerService {
     }
   }
 
-  @Cron(CronExpression.EVERY_DAY_AT_9AM)
+  @Cron(CronExpression.EVERY_MINUTE)
   handleDailyPush() {
     this.pushNotificationsService.cronSend();
   }

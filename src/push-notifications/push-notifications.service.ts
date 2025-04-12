@@ -13,9 +13,11 @@ export class PushNotificationsService {
 
     sendNow(dto: PushNotificationDto) {
         const users = this.userService.getAllUsers();
+
         users.forEach((user) => {
             console.log(`✅ Sent to ${user.name} [${user.deviceToken}]: ${dto.title} - ${dto.message}`)
         });
+        
         return { message: 'Notifications sent immediately.' };
     }
 
