@@ -4,23 +4,23 @@ A backend service built with **NestJS** to send **push notifications** to users,
 
 ---
 
-## 📦 Features
+## Features
 
-- 🔔 Send immediate notifications to all users
-- 📅 Schedule notifications via:
+- Send immediate notifications to all users
+- Schedule notifications via:
   - `Bull + Redis`
   - `node-cron`
-- ✅ Follows NestJS best practices (Modules, DTOs, Services, Validation)
-- 🧪 Includes simple in-memory mock user service (10 users)
+- Follows NestJS best practices (Modules, DTOs, Services, Validation)
+- Includes simple in-memory mock user service (10 users)
 
 ---
 
-## 🛠️ Setup Instructions
+## Setup Instructions
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/nest-push-notifications.git
-cd nest-push-notifications
+git clone https://github.com/NavidulHoque/push_notification_system.git
+cd push_notification_system
 ```
 
 ### 2. Install Dependencies
@@ -28,18 +28,36 @@ cd nest-push-notifications
 npm install
 ```
 
-### 3. Install Redis (For Bull Queue)
-If Redis is not installed:
-```bash
-# On macOS (with Homebrew)
-brew install redis
+### 3. Redis Setup with Docker
 
-# On Ubuntu
-sudo apt-get install redis
-```
-Start Redis:
+If you don’t have Redis installed locally, you can use Docker:
+
+## Step-by-Step
+
+## 1. Install Docker
+
+If you don’t already have Docker installed, [download it here](https://www.docker.com/products/docker-desktop/) and make sure it’s running:
+
 ```bash
-redis-server
+docker --version
+```
+
+## 2. Run Redis Container
+
+```bash
+docker run -d --name redis-server -p 6379:6379 redis
+```
+
+## 2. Test Redis Is Running
+
+```bash
+docker exec -it redis-server redis-cli
+ping
+```
+
+Expected response:
+```bash
+PONG
 ```
 
 ### 4. Start the App
