@@ -17,23 +17,23 @@ export class SchedulerService {
     try {
       const { title, message, scheduleAt } = job.data;
       if (!title || !message || !scheduleAt || isNaN(new Date(scheduleAt).getTime())) {
-        throw new Error('❌ Corrupted notification data, skipping...');
+        throw new Error('Corrupted notification data, skipping...');
       }
 
       const users = this.userService.getAllUsers();
       users.forEach((user) => {
-        console.log(`📅 [Scheduled] Sent to ${user.name} [${user.deviceToken}]: ${title} - ${message}`);
+        console.log(`[Scheduled] Sent to ${user.name} [${user.deviceToken}]: ${title} - ${message}`);
       });
     }
 
     catch (err) {
-      console.error(`❌ Error sending notification job id:[${job.id}]:`, err.message);
+      console.error(`Error sending notification job_id:[${job.id}]:`, err.message);
       throw err; // will trigger Bull's retry or move to failed queue
     }
   }
 
   @Cron(CronExpression.EVERY_MINUTE)
-  handleDailyPush() {
+  handleEveryMinutePush() {
     this.pushNotificationsService.cronSend();
   }
 }

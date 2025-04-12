@@ -15,9 +15,9 @@ export class PushNotificationsService {
         const users = this.userService.getAllUsers();
 
         users.forEach((user) => {
-            console.log(`✅ Sent to ${user.name} [${user.deviceToken}]: ${dto.title} - ${dto.message}`)
+            console.log(`Sent to ${user.name} (${user.deviceToken}): ${dto.title} - ${dto.message}`)
         });
-        
+
         return { message: 'Notifications sent immediately.' };
     }
 
@@ -42,7 +42,7 @@ export class PushNotificationsService {
     cronSend() {
         const users = this.userService.getAllUsers();
         users.forEach((user) => {
-            console.log(`⏰ [CRON] Sent to ${user.name} [${user.deviceToken}]: Daily Cron Notification`);
+            console.log(`[CRON] Sent to ${user.name} [${user.deviceToken}]: Every Minute Cron Notification`);
         });
     }
 }
