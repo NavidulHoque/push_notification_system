@@ -171,6 +171,7 @@ Error sending notification job_id:[1]: Corrupted notification data, skipping...
 [CRON] Sent to User9 [token_9]: Every Minute Cron Notification
 [CRON] Sent to User10 [token_10]: Every Minute Cron Notification
 ```
+---
 
 ## How Scheduling Works
 
