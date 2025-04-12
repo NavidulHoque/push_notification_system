@@ -108,6 +108,20 @@ Send a notification immediately to all users.
 }
 ```
 
+#### Example Output
+
+```bash
+Sent to User1 (token_1): Promo Alert - Get 20% OFF!
+Sent to User2 (token_2): Promo Alert - Get 20% OFF!
+Sent to User3 (token_3): Promo Alert - Get 20% OFF!
+Sent to User4 (token_4): Promo Alert - Get 20% OFF!
+Sent to User5 (token_5): Promo Alert - Get 20% OFF!
+Sent to User6 (token_6): Promo Alert - Get 20% OFF!
+Sent to User7 (token_7): Promo Alert - Get 20% OFF!
+Sent to User8 (token_8): Promo Alert - Get 20% OFF!
+Sent to User9 (token_9): Promo Alert - Get 20% OFF!
+Sent to User10 (token_10): Promo Alert - Get 20% OFF!
+```
 ---
 
 ### POST `/push/schedule`
@@ -123,7 +137,40 @@ Schedule a notification for later delivery.
 ```
 - `scheduleAt`: Must be a future valid ISO timestamp.
 
----
+#### Example Output with Bull Queue + Redis
+
+```bash
+[Scheduled] Sent to User1 [token_1]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User2 [token_2]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User3 [token_3]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User4 [token_4]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User5 [token_5]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User6 [token_6]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User7 [token_7]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User8 [token_8]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User9 [token_9]: Promo Alert - Get 20% OFF!
+[Scheduled] Sent to User10 [token_10]: Promo Alert - Get 20% OFF!
+```
+
+If the notification data is corrupted, then the endpoint will send this error response:
+
+```bash
+Error sending notification job_id:[1]: Corrupted notification data, skipping...
+```
+
+#### Example Output with Cron Job
+```bash
+[CRON] Sent to User1 [token_1]: Every Minute Cron Notification
+[CRON] Sent to User2 [token_2]: Every Minute Cron Notification
+[CRON] Sent to User3 [token_3]: Every Minute Cron Notification
+[CRON] Sent to User4 [token_4]: Every Minute Cron Notification
+[CRON] Sent to User5 [token_5]: Every Minute Cron Notification
+[CRON] Sent to User6 [token_6]: Every Minute Cron Notification
+[CRON] Sent to User7 [token_7]: Every Minute Cron Notification
+[CRON] Sent to User8 [token_8]: Every Minute Cron Notification
+[CRON] Sent to User9 [token_9]: Every Minute Cron Notification
+[CRON] Sent to User10 [token_10]: Every Minute Cron Notification
+```
 
 ## How Scheduling Works
 
@@ -191,57 +238,6 @@ The app simulates a table of 10 users:
 }
 ```
 
----
-
-## Example Output
-
-### `/push/send-now`
-```bash
-Sent to User1 (token_1): Promo Alert - Get 20% OFF!
-Sent to User2 (token_2): Promo Alert - Get 20% OFF!
-Sent to User3 (token_3): Promo Alert - Get 20% OFF!
-Sent to User4 (token_4): Promo Alert - Get 20% OFF!
-Sent to User5 (token_5): Promo Alert - Get 20% OFF!
-Sent to User6 (token_6): Promo Alert - Get 20% OFF!
-Sent to User7 (token_7): Promo Alert - Get 20% OFF!
-Sent to User8 (token_8): Promo Alert - Get 20% OFF!
-Sent to User9 (token_9): Promo Alert - Get 20% OFF!
-Sent to User10 (token_10): Promo Alert - Get 20% OFF!
-```
-
-### `/push/schedule` with Bull
-```bash
-[Scheduled] Sent to User1 [token_1]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User2 [token_2]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User3 [token_3]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User4 [token_4]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User5 [token_5]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User6 [token_6]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User7 [token_7]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User8 [token_8]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User9 [token_9]: Promo Alert - Get 20% OFF!
-[Scheduled] Sent to User10 [token_10]: Promo Alert - Get 20% OFF!
-```
-
-If the notification data is corrupted, then the endpoint will send this error response:
-
-```bash
-Error sending notification job_id:[1]: Corrupted notification data, skipping...
-```
-
-### with Cron
-```bash
-[CRON] Sent to User1 [token_1]: Every Minute Cron Notification
-[CRON] Sent to User2 [token_2]: Every Minute Cron Notification
-[CRON] Sent to User3 [token_3]: Every Minute Cron Notification
-[CRON] Sent to User4 [token_4]: Every Minute Cron Notification
-[CRON] Sent to User5 [token_5]: Every Minute Cron Notification
-[CRON] Sent to User6 [token_6]: Every Minute Cron Notification
-[CRON] Sent to User7 [token_7]: Every Minute Cron Notification
-[CRON] Sent to User8 [token_8]: Every Minute Cron Notification
-[CRON] Sent to User9 [token_9]: Every Minute Cron Notification
-[CRON] Sent to User10 [token_10]: Every Minute Cron Notification
-```
 ---
 
 ## Tech Stack
